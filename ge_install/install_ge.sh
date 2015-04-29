@@ -4,9 +4,7 @@
 #
 # Written by Dan Blanchard (dblanchard@ets.org), September 2013
 
-export SGE_CONFIG_DIR=$HOME/sge_config
-mkdir -p $SGE_CONFIG_DIR
-cp .travis_scripts/*_template $SGE_CONFIG_DIR
+export SGE_CONFIG_DIR=$HOME/ge_install
 sudo sed -i -r "s/^(127.0.0.1\s)(localhost\.localdomain\slocalhost)/\1localhost localhost.localdomain $(hostname) /" /etc/hosts
 sudo apt-get update -qq
 echo "gridengine-master shared/gridenginemaster string localhost" | sudo debconf-set-selections
