@@ -5,24 +5,24 @@
 # Written by Dan Blanchard (dblanchard@ets.org), September 2013
 
 export SGE_CONFIG_DIR=$HOME/ge_install
-sudo sed -i -r "s/^(127.0.0.1\s)(localhost\.localdomain\slocalhost)/\1localhost localhost.localdomain $(hostname) /" /etc/hosts
-sudo apt-get update -qq
-echo "gridengine-master shared/gridenginemaster string localhost" | sudo debconf-set-selections
-echo "gridengine-master shared/gridenginecell string default" | sudo debconf-set-selections
-echo "gridengine-master shared/gridengineconfig boolean true" | sudo debconf-set-selections
-sudo apt-get install gridengine-common gridengine-master
+sed -i -r "s/^(127.0.0.1\s)(localhost\.localdomain\slocalhost)/\1localhost localhost.localdomain $(hostname) /" /etc/hosts
+apt-get update -qq
+echo "gridengine-master shared/gridenginemaster string localhost" | debconf-set-selections
+echo "gridengine-master shared/gridenginecell string default" | debconf-set-selections
+echo "gridengine-master shared/gridengineconfig boolean true" | debconf-set-selections
+apt-get install gridengine-common gridengine-master
 # Do this in a separate step to give master time to start
-sudo apt-get install libdrmaa1.0 gridengine-client gridengine-exec
+apt-get install libdrmaa1.0 gridengine-client gridengine-exec
 export CORES=$(grep -c '^processor' /proc/cpuinfo)
 sed -i -r "s/template/$USER/" $SGE_CONFIG_DIR/user_template
-sudo qconf -Auser $SGE_CONFIG_DIR/user_template
-sudo qconf -au $USER arusers
-sudo qconf -as localhost
+qconf -Auser $SGE_CONFIG_DIR/user_template
+qconf -au $USER arusers
+qconf -as localhost
 export LOCALHOST_IN_SEL=$(qconf -sel | grep -c 'localhost')
-if [ $LOCALHOST_IN_SEL != "1" ]; then sudo qconf -Ae $SGE_CONFIG_DIR/host_template; else sudo qconf -Me $SGE_CONFIG_DIR/host_template; fi
+if [ $LOCALHOST_IN_SEL != "1" ]; then qconf -Ae $SGE_CONFIG_DIR/host_template; else qconf -Me $SGE_CONFIG_DIR/host_template; fi
 sed -i -r "s/UNDEFINED/$CORES/" $SGE_CONFIG_DIR/queue_template
-sudo qconf -Ap $SGE_CONFIG_DIR/batch_template
-sudo qconf -Aq $SGE_CONFIG_DIR/queue_template
+qconf -Ap $SGE_CONFIG_DIR/batch_template
+qconf -Aq $SGE_CONFIG_DIR/queue_template
 echo "Printing queue info to verify that things are working correctly."
 qstat -f -q all.q -explain a
 echo "You should see sge_execd and sge_qmaster running below:"
