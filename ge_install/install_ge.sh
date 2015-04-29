@@ -6,13 +6,13 @@
 
 export SGE_CONFIG_DIR=$HOME/ge_install
 sed -i -r "s/^(127.0.0.1\s)(localhost\.localdomain\slocalhost)/\1localhost localhost.localdomain $(hostname) /" /etc/hosts
-apt-get update -qq
+sudo apt-get -y update -qq
 echo "gridengine-master shared/gridenginemaster string localhost" | debconf-set-selections
 echo "gridengine-master shared/gridenginecell string default" | debconf-set-selections
 echo "gridengine-master shared/gridengineconfig boolean true" | debconf-set-selections
-apt-get install gridengine-common gridengine-master
+sudo apt-get -y install gridengine-common gridengine-master
 # Do this in a separate step to give master time to start
-apt-get install libdrmaa1.0 gridengine-client gridengine-exec
+sudo apt-get -y install libdrmaa1.0 gridengine-client gridengine-exec
 export CORES=$(grep -c '^processor' /proc/cpuinfo)
 sed -i -r "s/template/$USER/" $SGE_CONFIG_DIR/user_template
 qconf -Auser $SGE_CONFIG_DIR/user_template
