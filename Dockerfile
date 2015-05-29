@@ -11,8 +11,9 @@ ADD install_miniconda.sh /usr/share/install_miniconda.sh
 RUN /usr/share/install_miniconda.sh
 
 ADD supervisord.conf /etc/supervisord.conf
-RUN mkdir -m 777 /var/log/supervisor
-RUN unset HOSTNAME
+RUN mkdir /usr/share/supervisor
+ADD install_supervisor.sh /usr/share/supervisor/install_supervisor.sh
+RUN /usr/share/supervisor/install_supervisor.sh
 
 USER user
 WORKDIR /home/user
