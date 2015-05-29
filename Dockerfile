@@ -8,8 +8,8 @@ EXPOSE 6444
 ADD gridengine /usr/share/gridengine
 RUN /usr/share/gridengine/install_ge.sh
 
+ADD install_miniconda.sh /usr/share/install_miniconda.sh
+RUN /usr/share/install_miniconda.sh
+
 USER user
 WORKDIR /home/user
-
-ADD install_miniconda.sh /home/user/install_miniconda.sh
-RUN /home/user/install_miniconda.sh
