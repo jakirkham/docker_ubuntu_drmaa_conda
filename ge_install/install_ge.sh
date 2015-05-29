@@ -4,7 +4,7 @@
 #
 # Written by Dan Blanchard (dblanchard@ets.org), September 2013
 
-export SGE_CONFIG_DIR=${PWD##*/}
+export SGE_CONFIG_DIR=ge_install
 echo $SGE_CONFIG_DIR
 sed -i -r "s/^(127.0.0.1\s)(localhost\.localdomain\slocalhost)/\1localhost localhost.localdomain $(hostname) /" /etc/hosts
 apt-get -y update -qq
