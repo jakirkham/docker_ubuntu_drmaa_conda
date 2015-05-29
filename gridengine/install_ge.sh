@@ -25,6 +25,7 @@ sed -i -r "s/UNDEFINED/$CORES/" $SGE_CONFIG_DIR/queue_template
 qconf -Ap $SGE_CONFIG_DIR/batch_template
 qconf -Aq $SGE_CONFIG_DIR/queue_template
 service gridengine-master restart
+service gridengine-exec restart
 echo "Printing queue info to verify that things are working correctly."
 qstat -f -q all.q -explain a
 echo "You should see sge_execd and sge_qmaster running below:"
