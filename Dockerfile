@@ -10,3 +10,6 @@ RUN /usr/share/gridengine/install_ge.sh
 
 USER user
 WORKDIR /home/user
+
+ADD install_miniconda.sh /home/user/install_miniconda.sh
+RUN /home/user/install_miniconda.sh
