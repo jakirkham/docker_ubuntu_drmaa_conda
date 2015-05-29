@@ -15,9 +15,9 @@ apt-get -y install gridengine-common gridengine-master
 # Do this in a separate step to give master time to start
 apt-get -y install libdrmaa1.0 gridengine-client gridengine-exec
 export CORES=$(grep -c '^processor' /proc/cpuinfo)
-sed -i -r "s/template/$USER/" $SGE_CONFIG_DIR/user_template
+sed -i -r "s/template/user/" $SGE_CONFIG_DIR/user_template
 qconf -Auser $SGE_CONFIG_DIR/user_template
-qconf -au $USER arusers
+qconf -au user arusers
 qconf -as localhost
 export LOCALHOST_IN_SEL=$(qconf -sel | grep -c 'localhost')
 if [ $LOCALHOST_IN_SEL != "1" ]; then qconf -Ae $SGE_CONFIG_DIR/host_template; else qconf -Me $SGE_CONFIG_DIR/host_template; fi
