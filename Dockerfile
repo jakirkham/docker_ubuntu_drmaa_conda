@@ -10,9 +10,8 @@ RUN /usr/share/gridengine/install_ge.sh
 ADD install_miniconda.sh /usr/share/install_miniconda.sh
 RUN /usr/share/install_miniconda.sh
 
-ADD supervisord.conf /etc/supervisord.conf
-RUN mkdir /usr/share/supervisor
-ADD install_supervisor.sh /usr/share/supervisor/install_supervisor.sh
+ADD supervisor /usr/share/supervisor
+RUN mv /usr/share/supervisor/supervisord.conf /etc/supervisord.conf
 RUN /usr/share/supervisor/install_supervisor.sh
 
 USER user
