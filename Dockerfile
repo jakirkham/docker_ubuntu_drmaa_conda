@@ -23,8 +23,6 @@ RUN /usr/share/install_miniconda.sh
 
 ENV PATH=/opt/conda/bin:$PATH
 
-RUN apt-get clean
-
 USER user
 WORKDIR /home/user
 
