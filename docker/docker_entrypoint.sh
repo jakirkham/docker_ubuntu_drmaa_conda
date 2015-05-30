@@ -9,7 +9,7 @@ source /usr/share/gridengine/default/common/settings.sh
 #ulimit -l unlimited
 #ulimit -s unlimited
 
-echo "$HOSTNAME" > /usr/share/gridengine/default/common/act_qmaster
+echo "$HOSTNAME" > /var/lib/gridengine/default/common/act_qmaster
 echo "domain $HOSTNAME" >> /etc/resolv.conf
 /etc/init.d/sgemaster start
 qconf -mattr "queue" "hostlist" "$HOSTNAME" "debug"
