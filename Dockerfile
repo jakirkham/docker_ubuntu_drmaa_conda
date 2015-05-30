@@ -19,8 +19,8 @@ ADD supervisor /usr/share/supervisor
 RUN mv /usr/share/supervisor/supervisord.conf /etc/supervisord.conf
 RUN /usr/share/supervisor/install_supervisor.sh
 
-ADD install_miniconda.sh /usr/share/install_miniconda.sh
-RUN /usr/share/install_miniconda.sh
+ADD miniconda /usr/share/miniconda
+RUN /usr/share/miniconda/install_miniconda.sh
 
 ENV PATH=/opt/conda/bin:$PATH
 
