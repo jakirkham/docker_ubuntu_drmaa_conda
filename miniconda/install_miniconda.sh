@@ -13,10 +13,11 @@ apt-get clean
 cd /usr/share/miniconda
 wget http://repo.continuum.io/miniconda/Miniconda-3.9.1-Linux-x86_64.sh -O miniconda.sh
 bash miniconda.sh -b -p /opt/conda
-/opt/conda/bin/conda config --set always_yes yes
+export PATH="/opt/conda/bin:${PATH}"
+conda config --set always_yes yes
+source activate root
 
 # Install basic conda dependencies.
-source /opt/conda/bin/activate root
-/opt/conda/bin/conda update conda
-/opt/conda/bin/conda install conda-build
-/opt/conda/bin/conda install binstar
+conda update conda
+conda install conda-build
+conda install binstar
