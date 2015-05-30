@@ -4,8 +4,9 @@ MAINTAINER John Kirkham <jakirkham@gmail.com>
 
 RUN apt-get update && apt-get install -y sudo
 
-RUN useradd -m -s /bin/bash -g sudo user
-RUN echo '%sudo ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
+RUN groupadd wheel
+RUN useradd -m -s /bin/bash -g wheel user
+RUN echo '%wheel ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
 
 ADD gridengine /usr/share/gridengine
 RUN /usr/share/gridengine/install_ge.sh
