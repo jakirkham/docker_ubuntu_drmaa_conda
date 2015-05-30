@@ -7,12 +7,12 @@ RUN echo '%sudo ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
 ADD gridengine /usr/share/gridengine
 RUN /usr/share/gridengine/install_ge.sh
 
-ADD install_miniconda.sh /usr/share/install_miniconda.sh
-RUN /usr/share/install_miniconda.sh
-
 ADD supervisor /usr/share/supervisor
 RUN mv /usr/share/supervisor/supervisord.conf /etc/supervisord.conf
 RUN /usr/share/supervisor/install_supervisor.sh
+
+ADD install_miniconda.sh /usr/share/install_miniconda.sh
+RUN /usr/share/install_miniconda.sh
 
 USER user
 WORKDIR /home/user
