@@ -26,8 +26,11 @@ RUN /usr/share/miniconda/install_miniconda.sh
 
 ENV PATH=/opt/conda/bin:$PATH
 
+ADD docker /usr/share/docker
+
 USER user
 WORKDIR /home/user
 
+ENTRYPOINT [ "/usr/share/docker/docker_entrypoint.sh" ]
 EXPOSE 10389 22
 CMD ["/usr/bin/supervisord"]
