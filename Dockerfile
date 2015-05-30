@@ -21,6 +21,8 @@ RUN /usr/share/supervisor/install_supervisor.sh
 ADD install_miniconda.sh /usr/share/install_miniconda.sh
 RUN /usr/share/install_miniconda.sh
 
+ENV PATH=/opt/conda/bin:$PATH
+
 USER user
 WORKDIR /home/user
 
