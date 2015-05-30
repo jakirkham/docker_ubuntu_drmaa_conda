@@ -10,6 +10,10 @@ RUN echo '%sudo ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
 ADD gridengine /usr/share/gridengine
 RUN /usr/share/gridengine/install_ge.sh
 
+ENV SGE_ROOT=/var/lib/gridengine \
+    SGE_CELL=default \
+    DRMAA_LIBRARY_PATH=/usr/lib/libdrmaa.so.1.0
+
 ADD supervisor /usr/share/supervisor
 RUN mv /usr/share/supervisor/supervisord.conf /etc/supervisord.conf
 RUN /usr/share/supervisor/install_supervisor.sh
