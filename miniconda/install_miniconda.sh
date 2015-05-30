@@ -10,6 +10,7 @@ apt-get install -y libsm6 libXrender1
 apt-get clean
 
 # Download and configure conda.
+cd /usr/share/miniconda
 wget http://repo.continuum.io/miniconda/Miniconda-latest-Linux-x86_64.sh -O miniconda.sh
 bash miniconda.sh -b -p /opt/conda
 /opt/conda/bin/conda config --set always_yes yes
