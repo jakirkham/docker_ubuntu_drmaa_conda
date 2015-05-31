@@ -7,12 +7,41 @@ set -e
 #ulimit -l unlimited
 #ulimit -s unlimited
 
-sudo sh -c 'echo "$HOSTNAME" > /var/lib/gridengine/default/common/act_qmaster'
-sudo sh -c 'echo "domain $HOSTNAME" >> /etc/resolv.conf'
+# Get system specs
+export CORES=$(grep -c '^processor' /proc/cpuinfo)
+export HOSTNAME=$(hostname)
+export USER=$(whoami)
+
+# Fix some basic system and Grid Engine files
+sudo sh -c 'echo "domain ${HOSTNAME}" >> /etc/resolv.conf'
+sudo sh -c 'echo "${HOSTNAME}" > /var/lib/gridengine/default/common/act_qmaster'
+
+# Restart Grid Engine
 sudo service gridengine-master restart
 sudo service gridengine-exec restart
-sudo qconf -mattr "queue" "hostlist" "$HOSTNAME" "batch"
+
+# Replace all of the config files with the template files
+sudo cp $SGE_CONFIG_DIR/batch.conf.tmpl $SGE_CONFIG_DIR/batch.conf
+sudo cp $SGE_CONFIG_DIR/host.conf.tmpl $SGE_CONFIG_DIR/host.conf
+sudo cp $SGE_CONFIG_DIR/queue.conf.tmpl $SGE_CONFIG_DIR/queue.conf
+sudo cp $SGE_CONFIG_DIR/user.conf.tmpl $SGE_CONFIG_DIR/user.conf
+
+# Path the config files with system details as needed
+sudo sed -i -r "s/localhost/${HOSTNAME}/" $SGE_CONFIG_DIR/host.conf
+sudo sed -i -r "s/localhost/${HOSTNAME}/" $SGE_CONFIG_DIR/queue.conf
+sudo sed -i -r "s/UNDEFINED/${CORES}/" $SGE_CONFIG_DIR/queue.conf
+sudo sed -i -r "s/template/${USER}/" $SGE_CONFIG_DIR/user.conf
+
+# Apply configuration files to the Grid Engine configuration
+sudo qconf -Auser $SGE_CONFIG_DIR/user.conf
+sudo qconf -au $USER arusers
 sudo qconf -as $HOSTNAME
+
+export HOST_IN_SEL=$(qconf -sel | grep -c '$HOSTNAME')
+if [ $HOST_IN_SEL != "1" ]; then sudo qconf -Ae $SGE_CONFIG_DIR/host.conf; else sudo qconf -Me $SGE_CONFIG_DIR/host.conf; fi
+
+sudo qconf -Ap $SGE_CONFIG_DIR/batch.conf
+sudo qconf -Aq $SGE_CONFIG_DIR/queue.conf
 
 
 # Run whatever the user wants to
