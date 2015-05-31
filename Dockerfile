@@ -4,7 +4,7 @@ MAINTAINER John Kirkham <jakirkham@gmail.com>
 
 RUN echo "root:docker" | chpasswd
 
-RUN apt-get update && apt-get install -y sudo
+RUN apt-get update && apt-get install -y sudo && apt-get clean
 
 RUN groupadd wheel && \
     useradd -m -s /bin/bash -g wheel user && \
