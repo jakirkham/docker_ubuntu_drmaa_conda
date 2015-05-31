@@ -8,7 +8,7 @@ set -e
 #ulimit -s unlimited
 
 sudo sh -c 'echo "$HOSTNAME" > /var/lib/gridengine/default/common/act_qmaster'
-echo "domain $HOSTNAME" >> /etc/resolv.conf
+sudo sh -c 'echo "domain $HOSTNAME" >> /etc/resolv.conf'
 /etc/init.d/sgemaster start
 qconf -mattr "queue" "hostlist" "$HOSTNAME" "debug"
 qconf -as $HOSTNAME
