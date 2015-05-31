@@ -1,8 +1,4 @@
 #!/bin/bash
-# This script installs and configures a Sun Grid Engine installation for use
-# on a Travis instance.
-#
-# Written by Dan Blanchard (dblanchard@ets.org), September 2013
 
 export SGE_CONFIG_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 echo $SGE_CONFIG_DIR
