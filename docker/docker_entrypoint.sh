@@ -3,8 +3,6 @@
 
 set -e
 
-source /usr/share/gridengine/default/common/settings.sh
-
 # Set the ulimits for this container. Must be run with the --privileged option
 #ulimit -l unlimited
 #ulimit -s unlimited
