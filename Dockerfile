@@ -30,3 +30,4 @@ WORKDIR /home/user
 
 ENTRYPOINT [ "/usr/share/docker/docker_entrypoint.sh" ]
 EXPOSE 10389 22
+CMD [ "/bin/bash" ]
