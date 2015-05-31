@@ -29,5 +29,5 @@ ENV PATH=/opt/conda/bin:$PATH
 USER user
 WORKDIR /home/user
 
-EXPOSE 6444 10389 22
+EXPOSE 10389 22
 CMD ["/usr/bin/supervisord"]
