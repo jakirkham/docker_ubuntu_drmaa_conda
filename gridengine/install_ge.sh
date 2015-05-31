@@ -11,15 +11,21 @@ apt-get -y install gridengine-common gridengine-master
 # Do this in a separate step to give master time to start
 apt-get -y install libdrmaa1.0 gridengine-client gridengine-exec
 export CORES=$(grep -c '^processor' /proc/cpuinfo)
-sed -i -r "s/template/user/" $SGE_CONFIG_DIR/user.conf.tmpl
-qconf -Auser $SGE_CONFIG_DIR/user.conf.tmpl
+cp $SGE_CONFIG_DIR/user.conf.tmpl $SGE_CONFIG_DIR/user.conf
+sed -i -r "s/template/user/" $SGE_CONFIG_DIR/user.conf
+qconf -Auser $SGE_CONFIG_DIR/user.conf
 qconf -au user arusers
-qconf -as localhost
-export LOCALHOST_IN_SEL=$(qconf -sel | grep -c 'localhost')
-if [ $LOCALHOST_IN_SEL != "1" ]; then qconf -Ae $SGE_CONFIG_DIR/host.conf.tmpl; else qconf -Me $SGE_CONFIG_DIR/host.conf.tmpl; fi
-sed -i -r "s/UNDEFINED/$CORES/" $SGE_CONFIG_DIR/queue.conf.tmpl
-qconf -Ap $SGE_CONFIG_DIR/batch.conf.tmpl
-qconf -Aq $SGE_CONFIG_DIR/queue.conf.tmpl
+qconf -as $HOSTNAME
+cp $SGE_CONFIG_DIR/host.conf.tmpl $SGE_CONFIG_DIR/host.conf
+sed -i -r "s/localhost/${HOSTNAME}/" $SGE_CONFIG_DIR/host.conf
+export LOCALHOST_IN_SEL=$(qconf -sel | grep -c '$HOSTNAME')
+if [ $LOCALHOST_IN_SEL != "1" ]; then qconf -Ae $SGE_CONFIG_DIR/host.conf; else qconf -Me $SGE_CONFIG_DIR/host.conf; fi
+cp $SGE_CONFIG_DIR/queue.conf.tmpl $SGE_CONFIG_DIR/queue.conf
+sed -i -r "s/localhost/$HOSTNAME/" $SGE_CONFIG_DIR/queue.conf
+sed -i -r "s/UNDEFINED/$CORES/" $SGE_CONFIG_DIR/queue.conf
+cp $SGE_CONFIG_DIR/batch.conf.tmpl $SGE_CONFIG_DIR/batch.conf
+qconf -Ap $SGE_CONFIG_DIR/batch.conf
+qconf -Aq $SGE_CONFIG_DIR/queue.conf
 service gridengine-master restart
 service gridengine-exec restart
 echo "Printing queue info to verify that things are working correctly."
