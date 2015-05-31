@@ -2,6 +2,8 @@ FROM ubuntu:12.04
 MAINTAINER John Kirkham <jakirkham@gmail.com>
 
 
+RUN echo "root:docker" | chpasswd
+
 RUN apt-get update && apt-get install -y sudo
 
 RUN groupadd wheel && \
