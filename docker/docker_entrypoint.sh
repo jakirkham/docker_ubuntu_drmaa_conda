@@ -9,7 +9,8 @@ set -e
 
 sudo sh -c 'echo "$HOSTNAME" > /var/lib/gridengine/default/common/act_qmaster'
 sudo sh -c 'echo "domain $HOSTNAME" >> /etc/resolv.conf'
-/etc/init.d/sgemaster start
+sudo service gridengine-master restart
+sudo service gridengine-exec restart
 qconf -mattr "queue" "hostlist" "$HOSTNAME" "debug"
 qconf -as $HOSTNAME
 
