@@ -18,10 +18,6 @@ ENV SGE_CONFIG_DIR=/usr/share/gridengine \
     SGE_CELL=default \
     DRMAA_LIBRARY_PATH=/usr/lib/libdrmaa.so.1.0
 
-ADD supervisor /usr/share/supervisor
-RUN mv /usr/share/supervisor/supervisord.conf /etc/supervisord.conf
-RUN /usr/share/supervisor/install_supervisor.sh
-
 ADD miniconda /usr/share/miniconda
 RUN /usr/share/miniconda/install_miniconda.sh
 
@@ -34,4 +30,3 @@ WORKDIR /home/user
 
 ENTRYPOINT [ "/usr/share/docker/docker_entrypoint.sh" ]
 EXPOSE 10389 22
-CMD ["/usr/bin/supervisord"]
