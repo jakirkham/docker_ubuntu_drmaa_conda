@@ -13,7 +13,8 @@ RUN groupadd wheel && \
 ADD gridengine /usr/share/gridengine
 RUN /usr/share/gridengine/install_ge.sh
 
-ENV SGE_ROOT=/var/lib/gridengine \
+ENV SGE_CONFIG_DIR=/usr/share/gridengine \
+    SGE_ROOT=/var/lib/gridengine \
     SGE_CELL=default \
     DRMAA_LIBRARY_PATH=/usr/lib/libdrmaa.so.1.0
 
