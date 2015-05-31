@@ -11,7 +11,7 @@ sudo sh -c 'echo "$HOSTNAME" > /var/lib/gridengine/default/common/act_qmaster'
 sudo sh -c 'echo "domain $HOSTNAME" >> /etc/resolv.conf'
 sudo service gridengine-master restart
 sudo service gridengine-exec restart
-sudo qconf -mattr "queue" "hostlist" "$HOSTNAME" "debug"
+sudo qconf -mattr "queue" "hostlist" "$HOSTNAME" "batch"
 sudo qconf -as $HOSTNAME
 
 
