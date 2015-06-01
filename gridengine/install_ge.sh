@@ -20,9 +20,9 @@ service gridengine-master restart
 service gridengine-exec restart
 export CORES=$(grep -c '^processor' /proc/cpuinfo)
 cp $SGE_CONFIG_DIR/user.conf.tmpl $SGE_CONFIG_DIR/user.conf
-sed -i -r "s/template/user/" $SGE_CONFIG_DIR/user.conf
+sed -i -r "s/template/${USER}/" $SGE_CONFIG_DIR/user.conf
 qconf -Auser $SGE_CONFIG_DIR/user.conf
-qconf -au user arusers
+qconf -au $USER arusers
 qconf -as $HOSTNAME
 cp $SGE_CONFIG_DIR/host.conf.tmpl $SGE_CONFIG_DIR/host.conf
 sed -i -r "s/localhost/${HOSTNAME}/" $SGE_CONFIG_DIR/host.conf
