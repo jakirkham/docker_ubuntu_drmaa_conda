@@ -14,7 +14,7 @@ export USER=$(whoami)
 
 # Fix some basic system and Grid Engine files
 sudo sh -c 'echo "domain ${HOSTNAME}" >> /etc/resolv.conf'
-sudo sh -c "echo \"${HOSTNAME}\" > $SGE_ROOT/default/common/act_qmaster"
+sudo sh -c "echo \"${HOSTNAME}\" > ${SGE_ROOT}/default/common/act_qmaster"
 
 # Restart Grid Engine
 sudo service gridengine-master restart
