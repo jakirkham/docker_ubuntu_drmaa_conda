@@ -3,6 +3,9 @@
 export SGE_CONFIG_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 echo $SGE_CONFIG_DIR
 sed -i -r "s/^(127.0.0.1\s)(localhost\.localdomain\slocalhost)/\1localhost localhost.localdomain ${HOSTNAME} /" /etc/hosts
+cp /etc/resolv.conf /etc/resolv.conf.orig
+echo "domain ${HOSTNAME}" >> /etc/resolv.conf
+# Update everything.
 apt-get -y update -qq
 echo "gridengine-master shared/gridenginemaster string ${HOSTNAME}" | debconf-set-selections
 echo "gridengine-master shared/gridenginecell string default" | debconf-set-selections
@@ -10,6 +13,8 @@ echo "gridengine-master shared/gridengineconfig boolean true" | debconf-set-sele
 apt-get -y install gridengine-common gridengine-master
 # Do this in a separate step to give master time to start
 apt-get -y install libdrmaa1.0 gridengine-client gridengine-exec
+cp ${SGE_ROOT}/default/common/act_qmaster ${SGE_ROOT}/default/common/act_qmaster.orig
+echo \"${HOSTNAME}\" > ${SGE_ROOT}/default/common/act_qmaster
 export CORES=$(grep -c '^processor' /proc/cpuinfo)
 cp $SGE_CONFIG_DIR/user.conf.tmpl $SGE_CONFIG_DIR/user.conf
 sed -i -r "s/template/user/" $SGE_CONFIG_DIR/user.conf
@@ -60,5 +65,8 @@ grep stderr test.sh.e* &>/dev/null
 rm test.sh*
 
 set +e
+# Put everything back the way it was.
+cp /etc/resolv.conf.orig /etc/resolv.conf
+cp ${SGE_ROOT}/default/common/act_qmaster.orig ${SGE_ROOT}/default/common/act_qmaster
 # Clean apt-get so we don't have a bunch of junk left over from our build.
 apt-get clean
