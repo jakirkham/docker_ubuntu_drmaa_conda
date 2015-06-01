@@ -18,11 +18,11 @@ qconf -au user arusers
 qconf -as $HOSTNAME
 cp $SGE_CONFIG_DIR/host.conf.tmpl $SGE_CONFIG_DIR/host.conf
 sed -i -r "s/localhost/${HOSTNAME}/" $SGE_CONFIG_DIR/host.conf
-export LOCALHOST_IN_SEL=$(qconf -sel | grep -c "$HOSTNAME")
+export LOCALHOST_IN_SEL=$(qconf -sel | grep -c "${HOSTNAME}")
 if [ $LOCALHOST_IN_SEL != "1" ]; then qconf -Ae $SGE_CONFIG_DIR/host.conf; else qconf -Me $SGE_CONFIG_DIR/host.conf; fi
 cp $SGE_CONFIG_DIR/queue.conf.tmpl $SGE_CONFIG_DIR/queue.conf
-sed -i -r "s/localhost/$HOSTNAME/" $SGE_CONFIG_DIR/queue.conf
-sed -i -r "s/UNDEFINED/$CORES/" $SGE_CONFIG_DIR/queue.conf
+sed -i -r "s/localhost/${HOSTNAME}/" $SGE_CONFIG_DIR/queue.conf
+sed -i -r "s/UNDEFINED/${CORES}/" $SGE_CONFIG_DIR/queue.conf
 cp $SGE_CONFIG_DIR/batch.conf.tmpl $SGE_CONFIG_DIR/batch.conf
 qconf -Ap $SGE_CONFIG_DIR/batch.conf
 qconf -Aq $SGE_CONFIG_DIR/queue.conf
