@@ -42,6 +42,9 @@ qstat -f -q all.q -explain a
 echo "You should see sge_execd and sge_qmaster running below:"
 ps aux | grep "sge"
 # Add a job based test to make sure the system really works.
+echo
+echo "Submit a simple job to make sure the submission system really works."
+
 set -e
 
 echo "-------------- test.sh --------------"
