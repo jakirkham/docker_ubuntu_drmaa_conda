@@ -77,6 +77,8 @@ set +e
 popd &>/dev/null
 rm -rf /tmp/test_gridengine &>/dev/null
 # Put everything back the way it was.
+service gridengine-exec stop
+service gridengine-master stop
 cp /etc/resolv.conf.orig /etc/resolv.conf
 cp ${SGE_ROOT}/default/common/act_qmaster.orig ${SGE_ROOT}/default/common/act_qmaster
 # Clean apt-get so we don't have a bunch of junk left over from our build.
