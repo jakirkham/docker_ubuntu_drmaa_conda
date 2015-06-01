@@ -53,7 +53,7 @@ echo "-------------------------------------"
 echo
 chmod +x test.sh
 
-qsub -sync y test.sh
+qsub -cwd -sync y test.sh
 echo
 
 echo "------------ test.sh.o1 -------------"
