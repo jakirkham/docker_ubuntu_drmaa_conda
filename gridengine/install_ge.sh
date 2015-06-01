@@ -45,8 +45,8 @@ ps aux | grep "sge"
 echo
 echo "Submit a simple job to make sure the submission system really works."
 
-mkdir /tmp/test_gridengine
-pushd /tmp/test_gridengine
+mkdir /tmp/test_gridengine &>/dev/null
+pushd /tmp/test_gridengine &>/dev/null
 set -e
 
 echo "-------------- test.sh --------------"
@@ -74,8 +74,8 @@ grep stderr test.sh.e* &>/dev/null
 rm test.sh*
 
 set +e
-popd
-rm -rf /tmp/test_gridengine
+popd &>/dev/null
+rm -rf /tmp/test_gridengine &>/dev/null
 # Put everything back the way it was.
 cp /etc/resolv.conf.orig /etc/resolv.conf
 cp ${SGE_ROOT}/default/common/act_qmaster.orig ${SGE_ROOT}/default/common/act_qmaster
