@@ -4,7 +4,7 @@ export SGE_CONFIG_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 echo $SGE_CONFIG_DIR
 sed -i -r "s/^(127.0.0.1\s)(localhost\.localdomain\slocalhost)/\1localhost localhost.localdomain ${HOSTNAME} /" /etc/hosts
 apt-get -y update -qq
-echo "gridengine-master shared/gridenginemaster string localhost" | debconf-set-selections
+echo "gridengine-master shared/gridenginemaster string ${HOSTNAME}" | debconf-set-selections
 echo "gridengine-master shared/gridenginecell string default" | debconf-set-selections
 echo "gridengine-master shared/gridengineconfig boolean true" | debconf-set-selections
 apt-get -y install gridengine-common gridengine-master
