@@ -16,7 +16,7 @@ apt-get -y install gridengine-common gridengine-master
 # Do this in a separate step to give master time to start
 apt-get -y install libdrmaa1.0 gridengine-client gridengine-exec
 cp ${SGE_ROOT}/default/common/act_qmaster ${SGE_ROOT}/default/common/act_qmaster.orig
-echo \"${HOSTNAME}\" > ${SGE_ROOT}/default/common/act_qmaster
+echo $HOSTNAME > ${SGE_ROOT}/default/common/act_qmaster
 service gridengine-master restart
 service gridengine-exec restart
 export CORES=$(grep -c '^processor' /proc/cpuinfo)
