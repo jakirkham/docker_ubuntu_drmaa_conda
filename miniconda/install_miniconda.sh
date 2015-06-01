@@ -4,7 +4,7 @@
 apt-get install -y bzip2 tar
 
 # Install dependencies of conda's Qt4.
-apt-get install -y libsm6 libXrender1
+apt-get install -y libSM6 libXrender1
 
 # Clean out apt-get.
 apt-get clean
