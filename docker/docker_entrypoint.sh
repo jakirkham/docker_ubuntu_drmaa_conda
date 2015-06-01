@@ -40,10 +40,11 @@ sudo sh -c "export SGE_ROOT=${SGE_ROOT}; qconf -spl | grep -v "make" | xargs -r 
 sudo sh -c "export SGE_ROOT=${SGE_ROOT}; qconf -ss | xargs -r qconf -ds"
 sudo sh -c "export SGE_ROOT=${SGE_ROOT}; qconf -sel | xargs -r qconf -de"
 
-# Apply configuration files to the Grid Engine configuration
+# Apply configuration files to the Grid Engine configuration and wait briefly to ensure the submission host has been properly added
 sudo qconf -Auser $SGE_CONFIG_DIR/user.conf
 sudo qconf -au $USER arusers
 sudo qconf -as $HOSTNAME
+sleep 1
 
 export HOST_IN_SEL=$(qconf -sel | grep -c "$HOSTNAME")
 if [ $HOST_IN_SEL != "1" ]; then sudo qconf -Ae $SGE_CONFIG_DIR/host.conf; else sudo qconf -Me $SGE_CONFIG_DIR/host.conf; fi
