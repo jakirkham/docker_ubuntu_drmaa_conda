@@ -56,7 +56,7 @@ pushd /tmp/test_gridengine &>/dev/null
 set -e
 
 echo "-------------- test.sh --------------"
-echo -e '#!/bin/sh\necho "stdout"\necho "stderr" 1>&2' | tee test.sh
+echo -e '#!/bin/bash\necho "stdout"\necho "stderr" 1>&2' | tee test.sh
 echo "-------------------------------------"
 echo
 chmod +x test.sh
