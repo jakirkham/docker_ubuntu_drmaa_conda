@@ -32,6 +32,14 @@ sudo sed -i -r "s/localhost/${HOSTNAME}/" $SGE_CONFIG_DIR/queue.conf
 sudo sed -i -r "s/UNDEFINED/${CORES}/" $SGE_CONFIG_DIR/queue.conf
 sudo sed -i -r "s/template/${USER}/" $SGE_CONFIG_DIR/user.conf
 
+# Clean all existing settings.
+sudo sh -c "export SGE_ROOT=${SGE_ROOT}; qconf -suserl | xargs -I {} qconf -du {} arusers"
+sudo sh -c "export SGE_ROOT=${SGE_ROOT}; qconf -suserl | xargs qconf -duser"
+sudo sh -c "export SGE_ROOT=${SGE_ROOT}; qconf -sql | xargs qconf -dq"
+sudo sh -c "export SGE_ROOT=${SGE_ROOT}; qconf -spl | xargs qconf -dp"
+sudo sh -c "export SGE_ROOT=${SGE_ROOT}; qconf -ss | xargs qconf -ds"
+sudo sh -c "export SGE_ROOT=${SGE_ROOT}; qconf -sel | xargs qconf -de"
+
 # Apply configuration files to the Grid Engine configuration
 sudo qconf -Auser $SGE_CONFIG_DIR/user.conf
 sudo qconf -au $USER arusers
