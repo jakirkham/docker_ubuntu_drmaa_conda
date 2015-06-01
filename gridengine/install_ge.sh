@@ -32,5 +32,33 @@ echo "Printing queue info to verify that things are working correctly."
 qstat -f -q all.q -explain a
 echo "You should see sge_execd and sge_qmaster running below:"
 ps aux | grep "sge"
+# Add a job based test to make sure the system really works.
+set -e
+
+echo "-------------- test.sh --------------"
+echo -e '#!/bin/sh\necho "stdout"\necho "stderr" 1>&2' | tee test.sh
+echo "-------------------------------------"
+echo
+chmod +x test.sh
+
+qsub -sync y test.sh
+echo
+
+echo "------------ test.sh.o1 -------------"
+cat test.sh.o*
+echo "-------------------------------------"
+echo
+
+echo "------------ test.sh.e1 -------------"
+cat test.sh.e*
+echo "-------------------------------------"
+echo
+
+grep stdout test.sh.o* &>/dev/null
+grep stderr test.sh.e* &>/dev/null
+
+rm test.sh*
+
+set +e
 # Clean apt-get so we don't have a bunch of junk left over from our build.
 apt-get clean
