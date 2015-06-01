@@ -6,7 +6,7 @@ RUN echo "root:docker" | chpasswd
 
 RUN apt-get update -y && apt-get install -y sudo && apt-get clean
 
-RUN groupadd wheel && \
+RUN groupadd -f wheel && \
     useradd -m -s /bin/bash -g wheel user && \
     echo '%wheel ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
 
