@@ -22,8 +22,12 @@ service gridengine-exec restart
 export CORES=$(grep -c '^processor' /proc/cpuinfo)
 cp $SGE_CONFIG_DIR/user.conf.tmpl $SGE_CONFIG_DIR/user.conf
 sed -i -r "s/template/${USER}/" $SGE_CONFIG_DIR/user.conf
+qconf -suserl | xargs -r -I {} qconf -du {} arusers
+qconf -suserl | xargs -r qconf -duser
 qconf -Auser $SGE_CONFIG_DIR/user.conf
 qconf -au $USER arusers
+qconf -ss | xargs -r qconf -ds
+qconf -sel | xargs -r qconf -de
 qconf -as $HOSTNAME
 cp $SGE_CONFIG_DIR/host.conf.tmpl $SGE_CONFIG_DIR/host.conf
 sed -i -r "s/localhost/${HOSTNAME}/" $SGE_CONFIG_DIR/host.conf
@@ -33,6 +37,8 @@ cp $SGE_CONFIG_DIR/queue.conf.tmpl $SGE_CONFIG_DIR/queue.conf
 sed -i -r "s/localhost/${HOSTNAME}/" $SGE_CONFIG_DIR/queue.conf
 sed -i -r "s/UNDEFINED/${CORES}/" $SGE_CONFIG_DIR/queue.conf
 cp $SGE_CONFIG_DIR/batch.conf.tmpl $SGE_CONFIG_DIR/batch.conf
+qconf -sql | xargs -r qconf -dq
+qconf -spl | grep -v "make" | xargs -r qconf -dp
 qconf -Ap $SGE_CONFIG_DIR/batch.conf
 qconf -Aq $SGE_CONFIG_DIR/queue.conf
 service gridengine-master restart
