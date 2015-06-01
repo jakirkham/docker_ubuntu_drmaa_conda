@@ -37,7 +37,7 @@ sudo qconf -Auser $SGE_CONFIG_DIR/user.conf
 sudo qconf -au $USER arusers
 sudo qconf -as $HOSTNAME
 
-export HOST_IN_SEL=$(qconf -sel | grep -c '$HOSTNAME')
+export HOST_IN_SEL=$(qconf -sel | grep -c "$HOSTNAME")
 if [ $HOST_IN_SEL != "1" ]; then sudo qconf -Ae $SGE_CONFIG_DIR/host.conf; else sudo qconf -Me $SGE_CONFIG_DIR/host.conf; fi
 
 sudo qconf -Ap $SGE_CONFIG_DIR/batch.conf
