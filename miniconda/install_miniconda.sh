@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Install bzip2.
-apt-get install -y bzip2
+apt-get install -y bzip2 tar
 
 # Install dependencies of conda's Qt4.
 apt-get install -y libsm6 libXrender1
