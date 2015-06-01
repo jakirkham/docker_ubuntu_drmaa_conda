@@ -36,7 +36,7 @@ sudo sed -i -r "s/template/${USER}/" $SGE_CONFIG_DIR/user.conf
 sudo sh -c "export SGE_ROOT=${SGE_ROOT}; qconf -suserl | xargs -I {} qconf -du {} arusers"
 sudo sh -c "export SGE_ROOT=${SGE_ROOT}; qconf -suserl | xargs qconf -duser"
 sudo sh -c "export SGE_ROOT=${SGE_ROOT}; qconf -sql | xargs qconf -dq"
-sudo sh -c "export SGE_ROOT=${SGE_ROOT}; qconf -spl | xargs qconf -dp"
+sudo sh -c "export SGE_ROOT=${SGE_ROOT}; qconf -spl | grep -v "make" | xargs qconf -dp"
 sudo sh -c "export SGE_ROOT=${SGE_ROOT}; qconf -ss | xargs qconf -ds"
 sudo sh -c "export SGE_ROOT=${SGE_ROOT}; qconf -sel | xargs qconf -de"
 
