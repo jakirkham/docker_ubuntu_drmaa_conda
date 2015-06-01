@@ -1,5 +1,6 @@
 #!/bin/bash
 
+export USER=$(whoami)
 export SGE_CONFIG_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 export SGE_ROOT=/var/lib/gridengine
 echo $SGE_CONFIG_DIR
