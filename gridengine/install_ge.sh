@@ -15,6 +15,8 @@ apt-get -y install gridengine-common gridengine-master
 apt-get -y install libdrmaa1.0 gridengine-client gridengine-exec
 cp ${SGE_ROOT}/default/common/act_qmaster ${SGE_ROOT}/default/common/act_qmaster.orig
 echo \"${HOSTNAME}\" > ${SGE_ROOT}/default/common/act_qmaster
+service gridengine-master restart
+service gridengine-exec restart
 export CORES=$(grep -c '^processor' /proc/cpuinfo)
 cp $SGE_CONFIG_DIR/user.conf.tmpl $SGE_CONFIG_DIR/user.conf
 sed -i -r "s/template/user/" $SGE_CONFIG_DIR/user.conf
