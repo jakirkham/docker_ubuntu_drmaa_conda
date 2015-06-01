@@ -33,12 +33,12 @@ sudo sed -i -r "s/UNDEFINED/${CORES}/" $SGE_CONFIG_DIR/queue.conf
 sudo sed -i -r "s/template/${USER}/" $SGE_CONFIG_DIR/user.conf
 
 # Clean all existing settings.
-sudo sh -c "export SGE_ROOT=${SGE_ROOT}; qconf -suserl | xargs -I {} qconf -du {} arusers"
-sudo sh -c "export SGE_ROOT=${SGE_ROOT}; qconf -suserl | xargs qconf -duser"
-sudo sh -c "export SGE_ROOT=${SGE_ROOT}; qconf -sql | xargs qconf -dq"
-sudo sh -c "export SGE_ROOT=${SGE_ROOT}; qconf -spl | grep -v "make" | xargs qconf -dp"
-sudo sh -c "export SGE_ROOT=${SGE_ROOT}; qconf -ss | xargs qconf -ds"
-sudo sh -c "export SGE_ROOT=${SGE_ROOT}; qconf -sel | xargs qconf -de"
+sudo sh -c "export SGE_ROOT=${SGE_ROOT}; qconf -suserl | xargs -r -I {} qconf -du {} arusers"
+sudo sh -c "export SGE_ROOT=${SGE_ROOT}; qconf -suserl | xargs -r qconf -duser"
+sudo sh -c "export SGE_ROOT=${SGE_ROOT}; qconf -sql | xargs -r qconf -dq"
+sudo sh -c "export SGE_ROOT=${SGE_ROOT}; qconf -spl | grep -v "make" | xargs -r qconf -dp"
+sudo sh -c "export SGE_ROOT=${SGE_ROOT}; qconf -ss | xargs -r qconf -ds"
+sudo sh -c "export SGE_ROOT=${SGE_ROOT}; qconf -sel | xargs -r qconf -de"
 
 # Apply configuration files to the Grid Engine configuration
 sudo qconf -Auser $SGE_CONFIG_DIR/user.conf
