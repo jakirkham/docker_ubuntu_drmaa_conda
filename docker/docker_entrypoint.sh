@@ -41,17 +41,16 @@ sudo sh -c "export SGE_ROOT=${SGE_ROOT}; qconf -ss | xargs -r qconf -ds"
 sudo sh -c "export SGE_ROOT=${SGE_ROOT}; qconf -sel | xargs -r qconf -de"
 
 # Apply configuration files to the Grid Engine configuration and wait briefly to ensure the submission host has been properly added
-sudo qconf -Auser $SGE_CONFIG_DIR/user.conf
-sudo qconf -au $USER arusers
-sudo qconf -as $HOSTNAME
+sudo sh -c "SGE_ROOT=${SGE_ROOT} qconf -Auser ${SGE_CONFIG_DIR}/user.conf"
+sudo sh -c "SGE_ROOT=${SGE_ROOT} qconf -au ${USER} arusers"
+sudo sh -c "SGE_ROOT=${SGE_ROOT} qconf -as ${HOSTNAME}"
 sleep 1
 
 export HOST_IN_SEL=$(qconf -sel | grep -c "$HOSTNAME")
-if [ $HOST_IN_SEL != "1" ]; then sudo qconf -Ae $SGE_CONFIG_DIR/host.conf; else sudo qconf -Me $SGE_CONFIG_DIR/host.conf; fi
+if [ $HOST_IN_SEL != "1" ]; then sudo sh -c "SGE_ROOT=${SGE_ROOT} qconf -Ae ${SGE_CONFIG_DIR}/host.conf"; else sudo sh -c "SGE_ROOT=${SGE_ROOT} qconf -Me ${SGE_CONFIG_DIR}/host.conf"; fi
 
-sudo qconf -Ap $SGE_CONFIG_DIR/batch.conf
-sudo qconf -Aq $SGE_CONFIG_DIR/queue.conf
-
+sudo sh -c "SGE_ROOT=${SGE_ROOT} qconf -Ap ${SGE_CONFIG_DIR}/batch.conf"
+sudo sh -c "SGE_ROOT=${SGE_ROOT} qconf -Aq ${SGE_CONFIG_DIR}/queue.conf"
 
 # Run whatever the user wants to
 exec "$@"
