@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# Install wget to download the miniconda setup script.
+apt-get install -y wget
+
 # Install bzip2.
 apt-get install -y bzip2 tar
 
