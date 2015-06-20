@@ -2,8 +2,6 @@ FROM ubuntu:12.04
 MAINTAINER John Kirkham <jakirkham@gmail.com>
 
 
-RUN echo "root:docker" | chpasswd
-
 RUN apt-get update -y && apt-get install -y sudo && apt-get clean
 
 ADD gridengine /usr/share/gridengine
