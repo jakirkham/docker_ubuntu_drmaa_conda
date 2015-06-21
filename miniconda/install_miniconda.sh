@@ -24,3 +24,6 @@ conda update -y --all
 conda install -y conda-build
 conda install -y binstar
 conda install -y jinja2
+
+# Clean out all unneeded intermediates.
+conda clean -yitps
