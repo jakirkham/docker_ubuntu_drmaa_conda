@@ -20,7 +20,7 @@ export PATH="/opt/conda/bin:${PATH}"
 source activate root
 
 # Install basic conda dependencies.
-conda update -y conda
+conda update -y --all
 conda install -y conda-build
 conda install -y binstar
 conda install -y jinja2
