@@ -13,44 +13,44 @@ export HOSTNAME=$(hostname)
 export USER=$(whoami)
 
 # Fix some basic system and Grid Engine files
-sudo sh -c 'echo "domain ${HOSTNAME}" >> /etc/resolv.conf'
-sudo sh -c "echo \"${HOSTNAME}\" > ${SGE_ROOT}/default/common/act_qmaster"
+echo "domain ${HOSTNAME}" >> /etc/resolv.conf
+echo "${HOSTNAME}" > ${SGE_ROOT}/default/common/act_qmaster
 
 # Restart Grid Engine
-sudo service gridengine-master restart
-sudo service gridengine-exec restart
+service gridengine-master restart
+service gridengine-exec restart
 
 # Replace all of the config files with the template files
-sudo cp $SGE_CONFIG_DIR/batch.conf.tmpl $SGE_CONFIG_DIR/batch.conf
-sudo cp $SGE_CONFIG_DIR/host.conf.tmpl $SGE_CONFIG_DIR/host.conf
-sudo cp $SGE_CONFIG_DIR/queue.conf.tmpl $SGE_CONFIG_DIR/queue.conf
-sudo cp $SGE_CONFIG_DIR/user.conf.tmpl $SGE_CONFIG_DIR/user.conf
+cp $SGE_CONFIG_DIR/batch.conf.tmpl $SGE_CONFIG_DIR/batch.conf
+cp $SGE_CONFIG_DIR/host.conf.tmpl $SGE_CONFIG_DIR/host.conf
+cp $SGE_CONFIG_DIR/queue.conf.tmpl $SGE_CONFIG_DIR/queue.conf
+cp $SGE_CONFIG_DIR/user.conf.tmpl $SGE_CONFIG_DIR/user.conf
 
 # Path the config files with system details as needed
-sudo sed -i -r "s/localhost/${HOSTNAME}/" $SGE_CONFIG_DIR/host.conf
-sudo sed -i -r "s/localhost/${HOSTNAME}/" $SGE_CONFIG_DIR/queue.conf
-sudo sed -i -r "s/UNDEFINED/${CORES}/" $SGE_CONFIG_DIR/queue.conf
-sudo sed -i -r "s/template/${USER}/" $SGE_CONFIG_DIR/user.conf
+sed -i -r "s/localhost/${HOSTNAME}/" $SGE_CONFIG_DIR/host.conf
+sed -i -r "s/localhost/${HOSTNAME}/" $SGE_CONFIG_DIR/queue.conf
+sed -i -r "s/UNDEFINED/${CORES}/" $SGE_CONFIG_DIR/queue.conf
+sed -i -r "s/template/${USER}/" $SGE_CONFIG_DIR/user.conf
 
 # Clean all existing settings.
-sudo sh -c "export SGE_ROOT=${SGE_ROOT}; qconf -suserl | xargs -r -I {} qconf -du {} arusers"
-sudo sh -c "export SGE_ROOT=${SGE_ROOT}; qconf -suserl | xargs -r qconf -duser"
-sudo sh -c "export SGE_ROOT=${SGE_ROOT}; qconf -sql | xargs -r qconf -dq"
-sudo sh -c "export SGE_ROOT=${SGE_ROOT}; qconf -spl | grep -v "make" | xargs -r qconf -dp"
-sudo sh -c "export SGE_ROOT=${SGE_ROOT}; qconf -ss | xargs -r qconf -ds"
-sudo sh -c "export SGE_ROOT=${SGE_ROOT}; qconf -sel | xargs -r qconf -de"
+qconf -suserl | xargs -r -I {} qconf -du {} arusers
+qconf -suserl | xargs -r qconf -duser
+qconf -sql | xargs -r qconf -dq
+qconf -spl | grep -v "make" | xargs -r qconf -dp
+qconf -ss | xargs -r qconf -ds
+qconf -sel | xargs -r qconf -de
 
 # Apply configuration files to the Grid Engine configuration and wait briefly to ensure the submission host has been properly added
-sudo sh -c "SGE_ROOT=${SGE_ROOT} qconf -Auser ${SGE_CONFIG_DIR}/user.conf"
-sudo sh -c "SGE_ROOT=${SGE_ROOT} qconf -au ${USER} arusers"
-sudo sh -c "SGE_ROOT=${SGE_ROOT} qconf -as ${HOSTNAME}"
+qconf -Auser ${SGE_CONFIG_DIR}/user.conf
+qconf -au ${USER} arusers
+qconf -as ${HOSTNAME}
 sleep 1
 
 export HOST_IN_SEL=$(qconf -sel | grep -c "$HOSTNAME")
-if [ $HOST_IN_SEL != "1" ]; then sudo sh -c "SGE_ROOT=${SGE_ROOT} qconf -Ae ${SGE_CONFIG_DIR}/host.conf"; else sudo sh -c "SGE_ROOT=${SGE_ROOT} qconf -Me ${SGE_CONFIG_DIR}/host.conf"; fi
+if [ $HOST_IN_SEL != "1" ]; then qconf -Ae ${SGE_CONFIG_DIR}/host.conf; else qconf -Me ${SGE_CONFIG_DIR}/host.conf; fi
 
-sudo sh -c "SGE_ROOT=${SGE_ROOT} qconf -Ap ${SGE_CONFIG_DIR}/batch.conf"
-sudo sh -c "SGE_ROOT=${SGE_ROOT} qconf -Aq ${SGE_CONFIG_DIR}/queue.conf"
+qconf -Ap ${SGE_CONFIG_DIR}/batch.conf
+qconf -Aq ${SGE_CONFIG_DIR}/queue.conf
 
 # Run whatever the user wants to
 exec "$@"
