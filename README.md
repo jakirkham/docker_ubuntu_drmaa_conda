@@ -17,3 +17,7 @@ If one wishes to develop this repo, building will need to be performed manually.
 # Testing
 
 A simple test has been added during the installation of Grid Engine as this is the trickiest step and the one most likely to go wrong. The test submits a simple job and verifies that it runs successfully. As this occurs during the build process, failure of this test will terminate the build. Currently, Docker Hub does not provide a way to test the entrypoint to make sure it behaves properly. Ideally commonalities between the entrypoint and Grid Engine installation can be found and refactored out into a common script that both can use allowing it to be better tested. No direct testing of `conda` is performed. However, some basic installation and upgrading occurs, which should hopefully verify that it is working. Also, as this is pretty well tested by the team at Continuum, it is believed not to be at as serious of a risk.
+
+# Usage
+
+Once an image is acquired either from one of the provided builds or manually, the image is designed to provide a preconfigured shell environment. Simply run `docker run -it <NAME>`. This will configure Grid Engine and a number of environment variables useful for maintaining it and starts up `bash`. In the case of an automated build, `<NAME>` is `jakirkham/ubuntu_drmaa_conda`.
