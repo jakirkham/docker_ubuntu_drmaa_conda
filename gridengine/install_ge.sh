@@ -1,6 +1,7 @@
 #!/bin/bash
 
 export USER=$(whoami)
+export CORES=$(grep -c '^processor' /proc/cpuinfo)
 export SGE_CONFIG_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 export SGE_ROOT=/var/lib/gridengine
 echo $SGE_CONFIG_DIR
@@ -19,7 +20,6 @@ cp ${SGE_ROOT}/default/common/act_qmaster ${SGE_ROOT}/default/common/act_qmaster
 echo $HOSTNAME > ${SGE_ROOT}/default/common/act_qmaster
 service gridengine-master restart
 service gridengine-exec restart
-export CORES=$(grep -c '^processor' /proc/cpuinfo)
 cp $SGE_CONFIG_DIR/user.conf.tmpl $SGE_CONFIG_DIR/user.conf
 sed -i -r "s/template/${USER}/" $SGE_CONFIG_DIR/user.conf
 qconf -suserl | xargs -r -I {} qconf -du {} arusers
