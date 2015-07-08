@@ -11,6 +11,7 @@ set -e
 export CORES=$(grep -c '^processor' /proc/cpuinfo)
 export HOSTNAME=$(hostname)
 export USER=$(whoami)
+echo "CORES=${CORES}" >> /etc/environment
 
 # Fix some basic system and Grid Engine files
 echo "domain ${HOSTNAME}" >> /etc/resolv.conf
