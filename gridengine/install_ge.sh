@@ -5,8 +5,6 @@ export CORES=$(grep -c '^processor' /proc/cpuinfo)
 export SGE_CONFIG_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 export SGE_ROOT=/var/lib/gridengine
 echo $SGE_CONFIG_DIR
-echo -e '\nexport CORES=$(grep -c '"'"'^processor'"'"' /proc/cpuinfo)' >> /etc/bash.bashrc
-echo -e '\nsetenv CORES `grep -c '"'"'^processor'"'"' /proc/cpuinfo`' >> /etc/csh.cshrc
 sed -i -r "s/^(127.0.0.1\s)(localhost\.localdomain\slocalhost)/\1localhost localhost.localdomain ${HOSTNAME} /" /etc/hosts
 cp /etc/resolv.conf /etc/resolv.conf.orig
 echo "domain ${HOSTNAME}" >> /etc/resolv.conf
@@ -89,5 +87,8 @@ service gridengine-exec stop
 service gridengine-master stop
 cp /etc/resolv.conf.orig /etc/resolv.conf
 cp ${SGE_ROOT}/default/common/act_qmaster.orig ${SGE_ROOT}/default/common/act_qmaster
+# Set $CORES in the profiles once we are done.
+echo -e '\nexport CORES=$(grep -c '"'"'^processor'"'"' /proc/cpuinfo)' >> /etc/bash.bashrc
+echo -e '\nsetenv CORES `grep -c '"'"'^processor'"'"' /proc/cpuinfo`' >> /etc/csh.cshrc
 # Clean apt-get so we don't have a bunch of junk left over from our build.
 apt-get clean
