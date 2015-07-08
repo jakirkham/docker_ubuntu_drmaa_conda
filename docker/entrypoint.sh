@@ -8,8 +8,8 @@ set -e
 #ulimit -s unlimited
 
 # Get system specs (in case we didn't have them already).
-export CORES=$(grep -c '^processor' /proc/cpuinfo)
-export HOSTNAME=$(hostname)
+CORES=$(grep -c '^processor' /proc/cpuinfo)
+HOSTNAME=$(hostname)
 
 # Get the current user
 export USER=$(whoami)
