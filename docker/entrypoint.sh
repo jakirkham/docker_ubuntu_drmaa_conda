@@ -46,7 +46,7 @@ qconf -au ${USER} arusers
 qconf -as ${HOSTNAME}
 sleep 1
 
-export HOST_IN_SEL=$(qconf -sel | grep -c "$HOSTNAME")
+HOST_IN_SEL=$(qconf -sel | grep -c "$HOSTNAME")
 if [ $HOST_IN_SEL != "1" ]; then qconf -Ae ${SGE_CONFIG_DIR}/host.conf; else qconf -Me ${SGE_CONFIG_DIR}/host.conf; fi
 
 qconf -Ap ${SGE_CONFIG_DIR}/batch.conf
