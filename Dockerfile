@@ -15,7 +15,9 @@ ENV SGE_CONFIG_DIR=/usr/share/gridengine \
 ADD miniconda /usr/share/miniconda
 RUN /usr/share/miniconda/install_miniconda.sh
 
-ENV PATH=/opt/conda/bin:$PATH
+ENV PATH=/opt/conda/bin:$PATH \
+    CONDA_DEFAULT_ENV=root \
+    CONDA_ENV_PATH=/opt/conda
 
 ADD docker /usr/share/docker
 
