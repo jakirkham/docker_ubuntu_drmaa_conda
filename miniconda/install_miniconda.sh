@@ -1,7 +1,7 @@
 #!/bin/bash
 
-# Install wget to download the miniconda setup script.
-apt-get install -y wget
+# Install curl to download the miniconda setup script.
+apt-get install -y curl
 
 # Install VCS.
 apt-get install -y git mercurial subversion
@@ -17,7 +17,7 @@ apt-get clean
 
 # Download and configure conda.
 cd /usr/share/miniconda
-wget http://repo.continuum.io/miniconda/Miniconda-latest-Linux-x86_64.sh -O miniconda.sh
+curl http://repo.continuum.io/miniconda/Miniconda-latest-Linux-x86_64.sh > miniconda.sh
 bash miniconda.sh -b -p /opt/conda
 export PATH="/opt/conda/bin:${PATH}"
 source activate root
