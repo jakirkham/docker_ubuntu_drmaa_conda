@@ -6,7 +6,7 @@ apt-get install -y curl
 # Install VCS.
 apt-get install -y git mercurial subversion
 
-# Install bzip2.
+# Install bzip2 and tar. Needed for decompressing packages.
 apt-get install -y bzip2 tar
 
 # Install dependencies of conda's Qt4.
