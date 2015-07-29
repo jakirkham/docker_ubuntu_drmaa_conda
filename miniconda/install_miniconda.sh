@@ -24,6 +24,7 @@ source activate root
 
 # Install basic conda dependencies.
 conda update -y --all
+conda install -y pycrypto
 conda install -y conda-build
 conda install -y conda-server
 conda install -y jinja2
