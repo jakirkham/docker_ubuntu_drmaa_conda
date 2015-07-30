@@ -26,7 +26,7 @@ source activate root
 conda update -y --all
 conda install -y pycrypto
 conda install -y conda-build
-conda install -y conda-server
+conda install -y anaconda-client
 conda install -y jinja2
 
 # Clean out all unneeded intermediates.
