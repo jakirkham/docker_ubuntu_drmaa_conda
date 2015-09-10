@@ -21,6 +21,7 @@ curl http://repo.continuum.io/miniconda/Miniconda-latest-Linux-x86_64.sh > minic
 bash miniconda.sh -b -p /opt/conda
 export PATH="/opt/conda/bin:${PATH}"
 source activate root
+conda config --set show_channel_urls True
 
 # Install basic conda dependencies.
 conda update -y --all
