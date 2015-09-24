@@ -20,6 +20,9 @@ ENV PATH=/opt/conda/bin:$PATH \
     CONDA_DEFAULT_ENV=root \
     CONDA_ENV_PATH=/opt/conda
 
+RUN conda install -y drmaa && \
+    conda clean -tipsy
+
 ADD docker /usr/share/docker
 RUN /usr/share/docker/install_tini.sh
 
