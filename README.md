@@ -12,7 +12,7 @@ This repo is part of an automated build, which is hosted on Docker Hub ( <https:
 
 ## Manual
 
-If one wishes to develop this repo, building will need to be performed manually. This container can be built simply by `cd`ing into the repo and using `docker build -t <NAME> .` where `<NAME>` is the name tagged to the image built. More information about building can be found in Docker's documentation ( <https://docs.docker.com/reference/builder> ). Please consider opening a pull request for changes that you make.
+If one wishes to develop this repo, building will need to be performed manually. This container can be built simply by `cd`ing into the repo and using `docker build --rm -t <NAME> .` where `<NAME>` is the name tagged to the image built. More information about building can be found in Docker's documentation ( <https://docs.docker.com/reference/builder> ). Please consider opening a pull request for changes that you make.
 
 # Testing
 
@@ -20,4 +20,4 @@ A simple test has been added during the installation of Grid Engine as this is t
 
 # Usage
 
-Once an image is acquired either from one of the provided builds or manually, the image is designed to provide a preconfigured shell environment. Simply run `docker run -it <NAME>`. This will configure Grid Engine and a number of environment variables useful for maintaining it and starts up `bash`. In the case of an automated build, `<NAME>` is `jakirkham/ubuntu_drmaa_conda`.
+Once an image is acquired either from one of the provided builds or manually, the image is designed to provide a preconfigured shell environment. Simply run `docker run --rm -it <NAME>`. This will configure Grid Engine and a number of environment variables useful for maintaining it and starts up `bash`. In the case of an automated build, `<NAME>` is `jakirkham/ubuntu_drmaa_conda`.
