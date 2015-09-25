@@ -1,5 +1,5 @@
 [![](https://badge.imagelayers.io/jakirkham/ubuntu_drmaa_conda:latest.svg)](https://imagelayers.io/?images=jakirkham/ubuntu_drmaa_conda:latest 'Get your own badge on imagelayers.io')
-[![](https://img.shields.io/badge/Apache%202.0-license-blue.svg)](https://www.apache.org/licenses/LICENSE-2.0.txt 'Apache License Version 2.0')
+[![](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://www.apache.org/licenses/LICENSE-2.0.txt 'Apache License Version 2.0')
 
 # Purpose
 
