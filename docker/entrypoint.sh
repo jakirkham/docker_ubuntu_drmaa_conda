@@ -8,7 +8,7 @@ set -e
 #ulimit -s unlimited
 
 # Get system specs
-export CORES=$(grep -c '^processor' /proc/cpuinfo)
+export CORES=$([[ -z "${CORES+x}" ]] && echo $(grep -c '^processor' /proc/cpuinfo) || echo "${CORES}")
 export HOSTNAME=$(hostname)
 export USER=$(whoami)
 
