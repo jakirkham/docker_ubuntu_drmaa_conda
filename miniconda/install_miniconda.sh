@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# Update apt-get.
+apt-get update -y -q
+
 # Install curl to download the miniconda setup script.
 apt-get install -y curl
 
