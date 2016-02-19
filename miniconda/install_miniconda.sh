@@ -33,5 +33,8 @@ conda install -y conda-build
 conda install -y anaconda-client
 conda install -y jinja2
 
+# Install python bindings to DRMAA.
+conda install -y drmaa
+
 # Clean out all unneeded intermediates.
 conda clean -yitps
