@@ -22,6 +22,7 @@ apt-get clean
 cd /usr/share/miniconda
 curl http://repo.continuum.io/miniconda/Miniconda-latest-Linux-x86_64.sh > miniconda.sh
 bash miniconda.sh -b -p /opt/conda
+rm miniconda.sh
 export PATH="/opt/conda/bin:${PATH}"
 source activate root
 conda config --set show_channel_urls True
