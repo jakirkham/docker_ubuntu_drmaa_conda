@@ -23,6 +23,9 @@ cd /usr/share/miniconda
 curl http://repo.continuum.io/miniconda/Miniconda2-latest-Linux-x86_64.sh > miniconda2.sh
 bash miniconda2.sh -b -p /opt/conda2
 rm miniconda2.sh
+curl http://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh > miniconda3.sh
+bash miniconda3.sh -b -p /opt/conda3
+rm miniconda3.sh
 export PATH="/opt/conda/bin:${PATH}"
 source activate root
 conda config --set show_channel_urls True
