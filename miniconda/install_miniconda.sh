@@ -47,6 +47,11 @@ do
 
     # Clean out all unneeded intermediates.
     conda clean -yitps
+
+    # Provide links in standard path.
+    ln -s "${CONDA_PATH}/bin/python"  "/usr/local/bin/python${PYTHON_VERSION}"
+    ln -s "${CONDA_PATH}/bin/pip"  "/usr/local/bin/pip${PYTHON_VERSION}"
+    ln -s "${CONDA_PATH}/bin/conda"  "/usr/local/bin/conda${PYTHON_VERSION}"
 done
 
 # Set the conda2 environment as the default.
