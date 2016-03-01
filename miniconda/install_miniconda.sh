@@ -55,4 +55,5 @@ do
 done
 
 # Set the conda2 environment as the default.
+# This should be removed in the future.
 ln -s /opt/conda2 /opt/conda
