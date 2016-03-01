@@ -18,28 +18,36 @@ apt-get install -y libSM6 libXext6 libXrender1
 # Clean out apt-get.
 apt-get clean
 
-# Download and configure conda.
-cd /usr/share/miniconda
-curl http://repo.continuum.io/miniconda/Miniconda2-latest-Linux-x86_64.sh > miniconda2.sh
-bash miniconda2.sh -b -p /opt/conda2
-rm miniconda2.sh
-curl http://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh > miniconda3.sh
-bash miniconda3.sh -b -p /opt/conda3
-rm miniconda3.sh
+# Install everything for both environments.
+export OLD_PATH="${PATH}"
+for PYTHON_VERSION in 2 3;
+do
+    export CONDA_PATH="/opt/conda${PYTHON_VERSION}"
+
+    # Download and install `conda`.
+    cd /usr/share/miniconda
+    curl "http://repo.continuum.io/miniconda/Miniconda${PYTHON_VERSION}-latest-Linux-x86_64.sh" > "miniconda${PYTHON_VERSION}.sh"
+    bash "miniconda${PYTHON_VERSION}.sh" -b -p "${CONDA_PATH}"
+    rm "miniconda${PYTHON_VERSION}.sh"
+
+    # Configure `conda` and add to the path
+    export PATH="${CONDA_PATH}/bin:${OLD_PATH}"
+    source activate root
+    conda config --set show_channel_urls True
+
+    # Update and install basic conda dependencies.
+    conda update -y --all
+    conda install -y pycrypto
+    conda install -y conda-build
+    conda install -y anaconda-client
+    conda install -y jinja2
+
+    # Install python bindings to DRMAA.
+    conda install -y drmaa
+
+    # Clean out all unneeded intermediates.
+    conda clean -yitps
+done
+
+# Set the conda2 environment as the default.
 ln -s /opt/conda2 /opt/conda
-export PATH="/opt/conda/bin:${PATH}"
-source activate root
-conda config --set show_channel_urls True
-
-# Install basic conda dependencies.
-conda update -y --all
-conda install -y pycrypto
-conda install -y conda-build
-conda install -y anaconda-client
-conda install -y jinja2
-
-# Install python bindings to DRMAA.
-conda install -y drmaa
-
-# Clean out all unneeded intermediates.
-conda clean -yitps
